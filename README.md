@@ -120,29 +120,5 @@ fetch(request)
   ```
 </details>
 
-# CloudFlare Workers反代代码（支持VLESS\VMESS\Trojan-Go的WS模式）
-
-```
-const SingleDay = '应用程序名.herokuapp.com'
-const DoubleDay = '应用程序名.herokuapp.com'
-addEventListener(
-    "fetch",event => {
-    
-        let nd = new Date();
-        if (nd.getDate()%2) {
-            host = SingleDay
-        } else {
-            host = DoubleDay
-        }
-        
-        let url=new URL(event.request.url);
-        url.hostname=host;
-        let request=new Request(url,event.request);
-        event. respondWith(
-            fetch(request)
-        )
-    }
-)
-```
 ### 原作者项目地址：https://github.com/mixool/xrayku
 
