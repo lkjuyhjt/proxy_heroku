@@ -9,7 +9,7 @@
 * 支持tor网络，且可通过自定义网络配置文件启动v2ray和caddy来按需配置各种功能  
 * 支持存储自定义文件,目录及账号密码均为AUUID,客户端务必使用TLS连接  
   
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?template=https://github.com/shyperwang/proxy_heroku)  
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://dashboard.heroku.com/new?template=https://github.com/kjuyhjt/proxy_heroku)  
   
 ### 服务端
 点击上面紫色`Deploy to Heroku`，会跳转到heroku app创建页面，填上app的名字、选择节点、按需修改部分参数和AUUID后点击下面deploy创建app即可开始部署  
@@ -119,4 +119,30 @@ fetch(request)
 )
   ```
 </details>
-> [更多来自热心网友PR的使用教程](/tutorial)
+
+# CloudFlare Workers反代代码（支持VLESS\VMESS\Trojan-Go的WS模式）
+
+```
+const SingleDay = '应用程序名.herokuapp.com'
+const DoubleDay = '应用程序名.herokuapp.com'
+addEventListener(
+    "fetch",event => {
+    
+        let nd = new Date();
+        if (nd.getDate()%2) {
+            host = SingleDay
+        } else {
+            host = DoubleDay
+        }
+        
+        let url=new URL(event.request.url);
+        url.hostname=host;
+        let request=new Request(url,event.request);
+        event. respondWith(
+            fetch(request)
+        )
+    }
+)
+```
+### 原作者项目地址：https://github.com/mixool/xrayku
+
